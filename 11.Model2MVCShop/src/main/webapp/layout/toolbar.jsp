@@ -109,6 +109,8 @@
 			}); 
 		 });
 		
+		//====================================================	
+		
 		//============= 회원정보조회 Event  처리 =============	
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
@@ -123,5 +125,33 @@
 	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
 		});
+		
+		
+		//====================================================	
+			
+			
+			
+		//============= 판매상품등록 Event  처리 =============	
+		 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 	$("a:contains('판매상품등록')").on("click" , function() {
+				//$(self.location).attr("href","/product/addProductView");
+				self.location = "/product/addProductView"
+			}); 
+		 });
+		//============= 회원정보조회 Event  처리 =============	
+		 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 	$("a:contains('판매상품관리')").on("click" , function() {
+				//$(self.location).attr("href","/user/logout");
+				self.location = "/product/listProduct"
+			}); 
+		 });
+		
+		//====================================================	
+		
+		
+		
+		
 		
 	</script>  
