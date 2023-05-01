@@ -34,9 +34,6 @@
   <!-- jQuery UI toolTip 사용 JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
-	<!-- moment javascript library -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
-	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 	  body {
@@ -46,19 +43,19 @@
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
      <script type="text/javascript">
-   //=============    검색 / page 두가지 경우 모두  Event  처리 =============	
-	function fncGetProductList(currentPage) {
+    // 검색 / page 두가지 경우 모두 Form 전송을 위해 JavaScrpt 이용  
+	function fncGetList(currentPage) {
+		
     	$("#currentPage").val(currentPage);
 		
 		$("form").attr("method", "POST"). attr("action" , "/product/listProduct?menu=${param.menu}").submit();
-		//alert(${param.menu});
+		
 	}
-   
-   
+	
 	$(function () {
 		
 		$("#search").on("click", function () {
-			fncGetProductList('1');
+			fncGetList('1');
 		});
 		
 		
@@ -67,7 +64,7 @@
 			
 				$("td:nth-child(2)").on("click", function () {
 					var prodNo = $(this).children("input:hidden").val();
-					self.location = "/product/updateProductView?prodNo="+prodNo;
+					self.location = "/product/updateProduct?prodNo="+prodNo;
 					
 				});
 				
@@ -86,7 +83,7 @@
 									"Content-Type" : "application/json"
 								},
 								success : function (JSONData, status) {
-									//alert(prodNo);
+									
 									//Debug...
 									//alert(status);
 									//Debug...
@@ -98,7 +95,7 @@
 																+"상품상세정보 : "+JSONData.prodDetail+"<br/>"
 																+"제조일자 : "+JSONData.manuDate+"<br/>"
 																+"가격 : "+JSONData.price+"<br/>"
-																+"등록일자 : "+JSONData.regDate+"<br/>"
+																+"등록일자 : "+JSONData.regDateString+"<br/>"
 																+"</h6>";
 								$("h6").remove();
 								$("#"+prodNo+"").html(displayValue);
@@ -145,7 +142,7 @@
 																+"상품상세정보 : "+JSONData.prodDetail+"<br/>"
 																+"제조일자 : "+JSONData.manuDate+"<br/>"
 																+"가격 : "+JSONData.price+"<br/>"
-																+"등록일자 : "+JSONData.regDate+"<br/>"
+																+"등록일자 : "+JSONData.regDateString+"<br/>"
 																+"</h6>";
 								$("h6").remove();
 								$("#"+prodNo+"").html(displayValue);
@@ -166,7 +163,35 @@
 		
 	</script>
 	
-
+			<!-- autocomplete을 위해 추가 -->
+	<script type="text/javascript">
+  $( function() {
+	  
+	  $.ajax( 
+				{
+					url : "/product/json/autocomplete" ,
+					method : "GET" ,
+					dataType : "json" ,
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(JSONData , status) {
+						//Debug...
+						//alert(status);
+						//Debug...
+						//alert("JSONData : \n"+JSONData);
+						
+						var availableTags = JSONData;
+						
+						$( "#searchKeyword" ).autocomplete({
+						      source: availableTags
+						});
+						
+					}
+				});
+  } );
+  </script>	
 </head>
 <body bgcolor="#ffffff" text="#000000">
 
@@ -217,8 +242,9 @@
 			    
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" >
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>상품명</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품가격</option>
+						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>상품번호</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품명</option>
+						<option value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>상품가격</option>
 					</select>
 				  </div>
 				  
@@ -303,9 +329,13 @@
 			  	<input type="hidden" value="${product.prodNo }"></i>
 		</td>
 		</tr>
-       </c:forEach>
+	<!--	<tr>
+		  <td colspan="11" bgcolor="D6D7D6" height="1"></td>
+		<td id ="${product.prodNo }" colspan="11" bgcolor="D6D7D6" height="1"></td>
+		</tr>-->
+          </c:forEach>
         
-      </tbody>
+        </tbody>
 </table>
 	  <!--  table End /////////////////////////////////////-->
 	  
@@ -314,7 +344,7 @@
  	
  	
  	<!-- PageNavigation Start... -->
-	<jsp:include page="../common/pageNavigator_new2.jsp"/>
+	<jsp:include page="../common/pageNavigator_new.jsp"/>
 	<!-- PageNavigation End... -->
 	
 </body>

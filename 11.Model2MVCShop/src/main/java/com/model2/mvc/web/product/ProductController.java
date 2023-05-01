@@ -65,16 +65,24 @@ public class ProductController {
 	
 	//@RequestMapping("/addProduct.do")
 	@RequestMapping( value="addProduct", method=RequestMethod.POST )
-	public String addProduct(@ModelAttribute("product")Product product, @RequestParam("uploadFile") MultipartFile multipartFile) throws Exception{
+	public String addProduct(@ModelAttribute("product")Product product, @RequestParam("files") MultipartFile multipartFile) throws Exception{
 		
 		
 		System.out.println("/product/addProduct : POST");
 		
 		String file = multipartFile.getOriginalFilename();
-		
+		//파일 고유이름 부여
 		file = System.currentTimeMillis()+"_"+file;
 		product.setFileName(file);
-		File saveFile = new File("C:\\Users\\weyla\\git\\PJT9\\09.Model2MVCShop(jQuery)\\src\\main\\webapp\\images\\uploadFiles",file);
+		
+		System.out.println("파일이름  "+file);
+		
+		//tranNo="1" 판매중
+		product.setProTranCode("1");
+		
+		productService.addProduct(product);
+		
+		File saveFile = new File("C:\\Users\\weyla\\git\\PJT11\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles",file);
 		
 		//tranNo="1" 판매중
 		product.setProTranCode("1");
@@ -119,20 +127,27 @@ public class ProductController {
 	
 	//@RequestMapping("/updateProduct.do")==> 수정후 결과를 보여주는 update
 	@RequestMapping( value="updateProduct", method=RequestMethod.POST )
-	public String updateProduct( @ModelAttribute("product") Product product, Model model, HttpSession session,  @RequestParam("fileName2") MultipartFile multipartFile) throws Exception{
+	public String updateProduct( @ModelAttribute("product") Product product, Model model, HttpSession session,  @RequestParam("files") MultipartFile multipartFile) throws Exception{
 
 		System.out.println("수정후 결과를 보여주는 update update-->/product/updateProduct:POST");
+		String unchange = productService.getProduct(product.getProdNo()).getFileName();
+		
+		product.setFileName(unchange);
+		
 		String file = multipartFile.getOriginalFilename();
-		product.setFileName(file);
-		//Business Logic
-		productService.updateProduct(product);
+		if(file.length() >1) {
+		//파일 고유이름 부여
 		
 		file = System.currentTimeMillis()+"_"+file;
 		product.setFileName(file);
 		
-		File saveFile = new File("C:\\Users\\weyla\\git\\PJT9\\09.Model2MVCShop(jQuery)\\src\\main\\webapp\\images\\uploadFiles",file);
+		File saveFile = new File("C:\\Users\\weyla\\git\\PJT11\\11.Model2MVCShop\\src\\main\\webapp\\images\\uploadFiles",file);
 		
 		multipartFile.transferTo(saveFile);
+		}
+		
+		System.out.println("파일이름 : "+ product.getFileName());
+		productService.updateProduct(product);
 		
 		return "forward:/product/updateProduct.jsp";
 	}

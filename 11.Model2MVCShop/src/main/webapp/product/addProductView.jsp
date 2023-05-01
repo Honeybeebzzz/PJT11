@@ -52,20 +52,55 @@
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
 
-//==> 추가된부분 : "수정" "확인"  Event 연결 및 처리
+
+function fncAddProduct(){
+	//Form 유효성 검증
+ 	//var name = document.detailForm.prodName.value;
+	//var detail = document.detailForm.prodDetail.value;
+	//var manuDate = document.detailForm.manuDate.value;
+	//var price = document.detailForm.price.value;
+	var name = $("input[name='prodName']").val();
+	var detail = $("input[name='prodDetail']").val();
+	var manuDate = $("input[name='manuDate']").val();
+	var price = $("input[name='price']").val();
+	
+	
+	if(name == null || name.length<1){
+		alert("상품명은 반드시 입력하여야 합니다.");
+		return;
+	}
+	if(detail == null || detail.length<1){
+		alert("상품상세정보는 반드시 입력하여야 합니다.");
+		return;
+	}
+	if(manuDate == null || manuDate.length<1){
+		alert("제조일자는 반드시 입력하셔야 합니다.");
+		return;
+	}
+	if(price == null || price.length<1){
+		alert("가격은 반드시 입력하셔야 합니다.");
+		return;
+	}
+	
+	$("form").attr("method","POST").attr("action", "/product/addProduct").attr("enctype","multipart/form-data").submit();
+
+
+}
+
 $(function () {
-			$("td.ct_btn01:contains('확인')").on("click", function () {
-				self.location = "/product/listProduct?menu=manage"
-				
-			});
-			
-			$("td.ct_btn01:contains('추가등록')").on("click", function() {
-				
-				self.loaction = "../product/addProductView.jsp;"
-				
-			});
-						
-		});
+	
+	$( "button.btn.btn-primary" ).on("click" , function() {
+		fncAddProduct();
+		
+	});
+
+	
+	$("a[href='#' ]").on("click" , function() {
+		$("form")[0].reset();
+	});
+	
+		
+});
 
 </script>
 <!-- 캘린더 css라이브러리 -->
@@ -78,8 +113,8 @@ $(function () {
         autoclose: true, // 날짜 선택 후 닫힘
         todayHighlight: true,  // 오늘 날짜 강조
         useCurrent: false,	  // 오늘 날짜 선택 방지
-        minDate: new Date(2000, 0, 1), // 최소 날짜
-        maxDate: new Date(2030, 11, 31) // 최대 날짜
+        minDate: new Date(2000, 1, 1), // 최소 날짜
+        maxDate: new Date(2030, 12, 31) // 최대 날짜
       }).datepicker('show');
     });
   });
@@ -142,6 +177,7 @@ $("#price").on('keyup', function(){
 			        <i class="glyphicon glyphicon-calendar"></i>
 			      </span>
 			    </div>
+			    <strong class="text-danger">최소날짜 2000.1.1 , 최대날짜 2030.12.31 까지 입력가능</strong>
 			  </div>
 			</div>
 
@@ -154,13 +190,14 @@ $("#price").on('keyup', function(){
 		    <label for="price" class="col-sm-offset-1 col-sm-3 control-label">상품 가격</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="price" name="price" placeholder="상품 가격">
+		      <strong class="text-danger">가격에 천단위 구분자 자동입력</strong>
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="fileName" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
+		    <label for="files" class="col-sm-offset-1 col-sm-3 control-label">상품이미지</label>
 		    <div class="col-sm-4">
-		      <input type="file" class="form-control" id="fileName" name="fileName" placeholder="최대 1장 첨부 가능합니다.">
+		      <input type="file" class="form-control" id="files" name="files" placeholder="최대 1장 첨부 가능합니다.">
 		    </div>
 		  </div>
 	<!-- //////////////////////////////////////////////-->
@@ -169,7 +206,7 @@ $("#price").on('keyup', function(){
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-primary"  >확&nbsp;인</button>
-			  <a class="btn btn-primary btn" href="#" role="button">추가등록</a>
+			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 		  </div>
 		</form>
