@@ -47,9 +47,14 @@
 		//var price = document.detailForm.price.value;
 		
 		var name = $("input[name='prodName']").val();
+		alert("업데이트가 되나요 prodName");
 		var detail = $("input[name='prodDetail']").val();
+		alert("업데이트가 되나요 prodDetail");
 		var manuDate = $("input[name='manuDate']").val();
+		alert("업데이트가 되나요 manuDate");
 		var price = $("input[name='price']").val();
+		alert("업데이트가 되나요 price");
+		
 		if(name == null || name.length<1){
 			alert("상품명은 반드시 입력하여야 합니다.");
 			return;
@@ -66,25 +71,33 @@
 			alert("가격은 반드시 입력하셔야 합니다.");
 			return;
 		}
-		
+		alert("업데이트가 되나요");
 		$("form").attr("method", "POST").attr("action", "/product/updateProduct").attr("enctype", "multipart/form-data").submit();
+		alert("업데이트가 되나요22");
 	}
-//===========================================//
-//==> 추가된부분 : "수정"  Event 연결
- $(function() {
-	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
-	 $("button.btn.btn-primary" ).on("click" , function() {
-		//Debug..
-		//alert(  $( "td.ct_btn01:contains('확인')" ).html() );
-		fncAddProduct();
-	});
 	
-	 $( "a[href='#' ]" ).on("click" , function() {
-			//Debug..
-			//alert(  $( "td.ct_btn01:contains('취소')" ).html() );
-			history.go(-1);
+	
+	$(function () {
+		alert("왜 안되는거여?");
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$( "button.btn.btn-primary" ).on("click" , function() {
+				
+			alert("${product.price }")
+			fncAddProduct();
+			alert("${product.price }")
 		});
+		
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$("a[href='#' ]").on("click" , function() {
+			//$("form")[0].reset();
+		//});
+		
+		//$("td.ct_btn01:contains('취소')").on("click", function () {
+		//	
+			history.go(-1);
+			
+		});
+		
 		
 		 $(".ct_input_g img").on("click", function () {
 				
@@ -167,7 +180,7 @@
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-primary"  >확&nbsp;인</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+		      	<a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
 		    </div>
 		  </div>
 		</form>

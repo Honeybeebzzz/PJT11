@@ -127,12 +127,13 @@ public class ProductController {
 	
 	//@RequestMapping("/updateProduct.do")==> 수정후 결과를 보여주는 update
 	@RequestMapping( value="updateProduct", method=RequestMethod.POST )
-	public String updateProduct( @ModelAttribute("product") Product product, Model model, HttpSession session,  @RequestParam("files") MultipartFile multipartFile) throws Exception{
-
+	public String updateProduct( @ModelAttribute("product") Product product, Model model, @RequestParam("files") MultipartFile multipartFile) throws Exception{
 		System.out.println("수정후 결과를 보여주는 update update-->/product/updateProduct:POST");
+		System.out.println("product.getProdNo("+product.getProdNo()+")");
 		String unchange = productService.getProduct(product.getProdNo()).getFileName();
 		
 		product.setFileName(unchange);
+		System.out.println(unchange+"unchange");
 		
 		String file = multipartFile.getOriginalFilename();
 		if(file.length() >1) {

@@ -168,6 +168,9 @@ $("#price").on('keyup', function(){
 		    </div>
 		  </div>
 		  
+		  
+
+		  
 			<div class="form-group">
 			  <label for="manuDate" class="col-sm-offset-1 col-sm-3 control-label">제조일자</label>
 			  <div class="col-sm-4">

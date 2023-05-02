@@ -40,12 +40,16 @@ public class ProductServiceImpl implements ProductService {
 		System.out.println("여기는 서비스 임쁠22");
 	}
 	
-	public Product getProduct(int product) throws Exception {
-		return productDAO.getProduct(product);
+	
+	@Override
+	public Product getProduct(int prodNo) throws Exception {
+		return productDAO.getProduct(prodNo);
 	}
 
-	public Map<String , Object > getProductList(Search search) throws Exception {
-		List<Product> list= productDAO.getProductList(search);
+
+	@Override
+	public Map<String, Object> getProductList(Search search) throws Exception{
+		List<Product> list = productDAO.getProductList(search);
 		int totalCount = productDAO.getTotalCount(search);
 		
 		Map<String, Object> map = new HashMap<String, Object>();

@@ -37,11 +37,13 @@ public class ProductDAOImpl implements ProductDAO{
 	}
 	
 	public Product getProduct(int prodNo) throws Exception {
+		System.out.println("productDAOImpl getProduct까지 오니?");
 		return sqlSession.selectOne("ProductMapper.getProduct", prodNo);
 	}
 	
 	public void updateProduct(Product product) throws Exception {
-		sqlSession.update("ProductMapper.updateProduct", product);
+		System.out.println("productDAOImpl updateProduct까지 오니?");
+		 sqlSession.update("ProductMapper.updateProduct", product);
 	}
 
 	public List<Product> getProductList(Search search) throws Exception {

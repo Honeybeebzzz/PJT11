@@ -62,9 +62,11 @@ public class Product {
 		this.prodName = prodName;
 	}
 	public int getProdNo() {
+		System.out.println(prodNo+"여기는 Domain Product의 getProdNo prodNo");
 		return prodNo;
 	}
 	public void setProdNo(int prodNo) {
+		System.out.println(prodNo+"여기는 Domain Product의 setProdNo prodNo");
 		this.prodNo = prodNo;
 	}
 	public Date getRegDate() {

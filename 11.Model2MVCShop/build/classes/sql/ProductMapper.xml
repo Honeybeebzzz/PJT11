@@ -17,7 +17,7 @@
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
 	</resultMap>
 	
-	<!-- SQL : INSERT -->
+	<!-- SQL : INSERT -->	
 	<insert 	id="addProduct"		parameterType="product" >
 	 	INSERT
 		INTO product( prod_no, prod_name , prod_detail , MANUFACTURE_DAY , PRICE, image_FILE, reg_date) 
@@ -25,23 +25,25 @@
 							#{price:NUMERIC} , #{fileName:VARCHAR} , SYSDATE )
 	 </insert>
 	 
-	 <!-- SQL : SELECT ONE -->
+<!-- SQL : SELECT ONE -->
 	 <select 	id="getProduct"	parameterType="int"	resultMap="productSelectMap">
 		SELECT
-		PROD_NO , PROD_NAME , PROD_Detail , MANUFACTURE_DAY , PRICE, image_FILE, reg_date
-		FROM product 
-		WHERE PROD_NO = #{value}
-	 </select>
+		prod_no, prod_name, prod_detail, manufacture_day, price, image_file, reg_date
+		FROM product
+		WHERE prod_no = #{value}
+	
+	</select>
 	 
 	 <!-- SQL : UPDATE -->
 	 <update	id="updateProduct"	parameterType="product" >
 	   	UPDATE product
 	   	<set>
-	   		PROD_NAME 			= #{prodName} ,
-			PROD_DETAIL			= #{prodDetail},
-			MANUFACTURE_DAY		= #{manuDate} ,
-			PRICE				= #{price},
-			image_FILE			= #{fileName}
+	   		PROD_NAME 			= #{prodName:VARCHAR} ,
+	   		Prod_No				= #{prodNo:NUMERIC},
+			PROD_DETAIL			= #{prodDetail:VARCHAR},
+			MANUFACTURE_DAY		= #{manuDate:VARCHAR} ,
+			PRICE				= #{price:NUMERIC},
+			image_FILE			= #{fileName:VARCHAR}
 	   	</set>
 	   	WHERE prod_no = #{prodNo}
 	 </update>

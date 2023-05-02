@@ -27,10 +27,14 @@
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
- 		body {
+	  body {
             padding-top : 50px;
         }
-     </style>
+      body > div.container{
+        	border: 3px solid #D9F0A0;
+            margin-top: 10px;
+        }
+    </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
@@ -46,7 +50,7 @@
 		 $("button" ).on("click" , function() {
 			//Debug..
 			//alert(  $( "td.ct_btn01:contains('확인')" ).html() );
-			self.location = "/product/updateProduct?prodNo=${product.prodNo}";
+			self.location = "/product/listProduct?menu=manage";
 		});
 	});
 
@@ -110,7 +114,7 @@
 
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >상품정보수정</button>
+		      <button type="button" class="btn btn-primary"  >확인</button>
 		    </div>
 		  </div>
 </body>
